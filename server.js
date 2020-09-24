@@ -30,6 +30,10 @@ app.use(bodyParser.json({limit: '10mb', extended: true}));
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use(cookieParser());
 //cors
+if (process.env.NODE_ENV === 'development') {
+    app.use(cors({origin: `${process.env.CLIENT_URL}`}))
+}
+
 
 /*
     This works only between browsers to browsers.   
