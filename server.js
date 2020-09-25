@@ -21,8 +21,10 @@ const { requireSignin, adminMiddleware, authMiddleware } = require('./controller
 const app = express()
 
 //db
-mongoose.connect(process.env.DATABASE, {useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false})
-.then(() => console.log('Database is connected...'));
+mongoose.connect(
+    process.env.DATABASE, 
+    {useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false}
+    ).then(() => console.log('Database is connected...'));
 
 //middlewares
 app.use(morgan('dev'));
@@ -30,17 +32,15 @@ app.use(bodyParser.json({limit: '10mb', extended: true}));
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use(cookieParser());
 //cors
-if (process.env.NODE_ENV === 'development') {
-    app.use(cors({origin: `${process.env.CLIENT_URL}`}))
-}
-
-
 /*
     This works only between browsers to browsers.   
 */
-if(process.env.NODE_ENV === 'development') {
+/*if(process.env.NODE_ENV === 'development') {
     app.use(cors({origin: `${process.env.CLIENT_URL}`}));
-}
+}*/
+
+app.use(cors());
+
 
 //routes middleware
 app.use('/api', blogRoutes);
