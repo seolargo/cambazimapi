@@ -217,7 +217,7 @@ exports.listAllProducts = async (req, res) => {
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
-        .select('_id title slug excerpt categories postedBy createdAt updatedAt price quantity age city town village sellerType sellerCellphone sellerAddress estimatedWeight animalType poultry animalSubCategories animalVariety')
+        .select('_id title slug excerpt postedBy createdAt updatedAt price quantity age city town village sellerType sellerCellphone sellerAddress estimatedWeight animalType poultry animalSubCategories animalVariety')
         .exec((err, data) => {
             if (err) {
                 return res.json({
@@ -409,7 +409,6 @@ exports.photo2 = (req, res) => {
 
 exports.photo3 = (req, res) => {
     const slug = req.params.slug.toLowerCase();
-    console.log(slug);
     Product.findOne({ slug })
         .select('photo3')
         .exec((err, product) => {
@@ -572,6 +571,7 @@ exports.listBySearch = (req, res) => {
                     error: 'Products not found'
                 });
             }
+            console.log('listBySearch')
             res.json({
                 size: data.length,
                 data

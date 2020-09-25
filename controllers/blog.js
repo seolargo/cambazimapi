@@ -17,7 +17,7 @@ exports.create = (req, res) => {
     form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
         //console.log(fields);
-        console.log(JSON.stringify(files.photo));
+        //console.log(JSON.stringify(files.photo));
         //console.log(typeof files); //type: object
         //console.log(Buffer.from(files.photo, "base64"));
         if (err) {
