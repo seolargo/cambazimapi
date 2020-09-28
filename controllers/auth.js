@@ -15,14 +15,18 @@ const { response } = require('express');
 
 exports.preSignup = (req, res) => {
     const {name, email, password} = req.body;
+    console.log('name: ', name)
+    console.log('email: ', email)
+    console.log('password: ', password)
     User.findOne({email: email.toLowerCase()}, (err, user) => {
         if (user) {
+            console.log('user: ', user);
             return res.status(400).json({
                 error: 'Bu e-posta ile daha önceden kayıtlı bir kullanıcımız var'
             })
         }
         const token = jwt.sign({name, email, password}, process.env.JWT_ACCOUNT_ACTIVATION, {expiresIn: '10m'});
-        
+        console.log(token);
         //email
         const emailData = {
             from: process.env.EMAIL_FROM,
@@ -35,7 +39,7 @@ exports.preSignup = (req, res) => {
                 <p>http://cambazim.com</p>
             `
         };
-
+        console.log(emailData);
         sgMail.send(emailData).then(sent => {
             return res.json({
                 message: `${email} isimli e-posta adresinize bir e-posta gönderdik. Yönergeleri izleyerek hesabınızı aktif hale getirebilirsiniz`
